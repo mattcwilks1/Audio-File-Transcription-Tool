@@ -7,7 +7,23 @@ Transcribe large audio files — meetings, interviews, hearings, podcasts —
 never leaves your machine. The only thing fetched at runtime is the model
 weights, downloaded once from the Hugging Face Hub and cached by the browser.
 
-## Running it
+## Use it on the web (no install)
+
+This repo is a static site, so GitHub Pages can host it — useful on a locked-down
+machine where you can't run a terminal. Enable it once, under
+**Settings → Pages → Build and deployment → Source: Deploy from a branch**,
+branch `main`, folder `/ (root)`. After a minute the tool is live at:
+
+<https://mattcwilks1.github.io/Audio-File-Transcription-Tool/>
+
+Everything still runs client-side in your browser — Pages only serves the
+files, it never sees your audio.
+
+> Note: GitHub Pages can't send the `COOP`/`COEP` headers that multi-threaded
+> WebAssembly needs, so the CPU path runs single-threaded there. WebGPU is
+> unaffected, so use Chrome or Edge for the fast path.
+
+## Running it locally
 
 You need any static file server (module workers can't load from a plain
 `file://` page). Two easy options from the project folder:
