@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Transcriber</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='13'%3E%F0%9F%8E%99%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">Audio <span>Transcriber</span></div>
+    <span class="pill">runs locally in your browser</span>
+    <div class="topgroup grow"></div>
+    <div class="topgroup">
+      <span id="device-pill" class="pill"></span>
+    </div>
+  </header>
+
+  <div id="main">
+    <aside id="sidebar">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Audio</h2>
+          <button id="btn-open" class="tb small">Open Audio…</button>
+          <input type="file" id="file-input" accept="audio/*,video/mp4,video/webm,.m4a,.mp3,.wav,.ogg,.flac,.aac,.opus" hidden>
+        </div>
+        <div class="filebox">
+          <div id="file-name" class="fname">No file loaded</div>
+          <div id="file-meta" class="fmeta"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Settings</h2></div>
+        <label class="field">Model
+          <select id="model"></select>
+        </label>
+        <label class="field">Language
+          <select id="language"></select>
+        </label>
+        <label class="field">Compute
+          <select id="device">
+            <option value="auto">Auto (GPU if available)</option>
+            <option value="webgpu">WebGPU</option>
+            <option value="wasm">CPU (WASM)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Transcribe</h2></div>
+        <div class="row btns">
+          <button id="btn-start" class="tb primary" disabled>Transcribe</button>
+          <button id="btn-pause" class="tb" disabled>Pause</button>
+          <button id="btn-cancel" class="tb" disabled>Cancel</button>
+        </div>
+        <div id="model-progress" hidden></div>
+        <div class="progress-track"><div id="progress-bar"></div></div>
+        <div id="progress-label" class="fmeta"></div>
+        <div id="status"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Export</h2></div>
+        <div class="row btns">
+          <button id="btn-txt" class="tb small" disabled title="Plain text">TXT</button>
+          <button id="btn-srt" class="tb small" disabled title="SubRip subtitles">SRT</button>
+          <button id="btn-vtt" class="tb small" disabled title="WebVTT subtitles">VTT</button>
+          <button id="btn-copy" class="tb small" disabled title="Copy plain text">Copy</button>
+        </div>
+        <p class="hint">Everything runs in your browser — audio never leaves your machine. The model downloads once from Hugging Face and is cached.</p>
+      </div>
+    </aside>
+
+    <div id="content">
+      <div id="player-wrap" hidden>
+        <audio id="player" controls preload="metadata"></audio>
+      </div>
+      <div id="transcript-scroll">
+        <div id="transcript"></div>
+        <div id="transcript-empty">
+          <div class="dh-inner">
+            <h1>Transcribe large audio files</h1>
+            <p>Drop an audio file anywhere on this page — meetings, interviews, hearings, podcasts. Hours-long files are fine: they're processed in 30-second chunks and the transcript streams in live.</p>
+            <ol>
+              <li>Open (or drop) an audio file</li>
+              <li>Pick a model — Base English is a good default</li>
+              <li>Press <b>Transcribe</b>, watch text appear; export TXT / SRT / VTT</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="drop-hint"></div>
+</div>
+<script type="module" src="src/transcribe.js"></script>
+</body>
+</html>

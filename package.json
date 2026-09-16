@@ -1,0 +1,9 @@
+{
+  "name": "audio-file-transcription-tool",
+  "version": "0.1.0",
+  "description": "Transcribe large audio files locally in the browser with Whisper (transformers.js).",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8000"
+  }
+}
